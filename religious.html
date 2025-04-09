@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" oncontextmenu="return false">
+<head>
+    <style>
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .allow-select {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Religious Places Quiz - Samaik Mapwork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #0ea5e9, #1d4ed8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        #map-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        #map-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: crosshair;
+        }
+        .marker {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+        }
+        #user-marker {
+            color: #ef4444;
+            z-index: 10;
+        }
+        #answer-marker {
+            color: #10b981;
+            z-index: 5;
+        }
+        .btn {
+            transition: all 0.2s ease;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-white font-['Poppins']">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-gray-100 to-blue-100 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold gradient-text">Samaik Mapwork</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
+                <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
+            </div>
+            <div class="md:hidden">
+                <i class="fas fa-bars text-gray-700 text-xl"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Banner -->
+ 
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pb-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Question Display -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <div class="text-center">
+                    <p class="text-gray-600 mb-2">यो धार्मिक स्थल कहाँ छ?</p>
+                    <h2 class="text-2xl md:text-3xl font-bold text-blue-600" id="question-text"></h2>
+                </div>
+            </div>
+
+            <!-- Interactive Map -->
+            <div id="map-container" class="mb-8">
+                <img 
+                    src="nepal.jpg" 
+                    alt="Nepal Map" 
+                    id="map-image"
+                    onerror="this.src='https://images.unsplash.com/photo-1607328900715-3a3d1d3e3d3d?ixid=M3wzNjM5Nzd8MHwxfHNlYXJjaHwxfHxuZXBhbCUyMG1hcHxlbnwwfHx8fDE3MDc1MjA0NTB8MA&ixlib=rb-4.0.3&w=800'"
+                >
+                <div id="user-marker" class="marker hidden">
+                    <i class="fas fa-place-of-worship"></i>
+                </div>
+                <div id="answer-marker" class="marker hidden">
+                    <i class="fas fa-place-of-worship"></i>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                    id="show-answer-btn"
+                    class="btn px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg"
+                >
+                    उत्तर देखाउनुहोस्
+                </button>
+                <button 
+                    id="next-question-btn"
+                    class="btn px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg"
+                >
+                    अर्को प्रश्न
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const religiousPlaces = [
+                {name: "पशुपतिनाथ मन्दिर", x: 0.5, y: 0.5},
+                {name: "तपोवन ", x: 0.5, y: 0.5},
+                {name: "शैलेश्वरी ", x: 0.5, y: 0.5},
+                {name: "उग्रतारा ", x: 0.5, y: 0.5},
+                {name: "देउती बजै ", x: 0.5, y: 0.5},
+                {name: "बागेश्वरी मन्दिर", x: 0.5, y: 0.5},
+                {name: "बाग्लुङ कालिका मन्दिर", x: 0.5, y: 0.5},
+                {name: "कालिका देवी मन्दिर", x: 0.5, y: 0.5},
+                {name: "कालिका मालिका गढी मन्दिर", x: 0.5, y: 0.5},
+                {name: "कालिका देवी मालिका गढी मन्दिर", x: 0.5, y: 0.5},
+                {name: "स्वर्गद्वारी मन्दिर", x: 0.5, y: 0.5},
+                {name: "लुम्बिनी", x: 0.5, y: 0.5},
+                {name: "विन्ध्यवासिनी मन्दिर", x: 0.5, y: 0.5},
+                {name: "मुक्तिनाथ मन्दिर", x: 0.5, y: 0.5},
+                {name: "मनकामना मन्दिर", x: 0.5, y: 0.5},
+                {name: "देवघाट मन्दिर", x: 0.5, y: 0.5},
+                {name: "गोसाइकुण्ड मन्दिर", x: 0.5, y: 0.5},
+                {name: "गढीमाई मन्दिर", x: 0.5, y: 0.5},
+                {name: "पलान्चोक भगवती मन्दिर", x: 0.5, y: 0.5},
+                {name: "स्याङबोचे स्तुपा", x: 0.5, y: 0.5},
+                {name: "हालेसी महादेव मन्दिर", x: 0.5, y: 0.5},
+                {name: "पराम जनकी मन्दिर", x: 0.5, y: 0.5},
+                {name: "छिन्नमस्ता मन्दिर", x: 0.5, y: 0.5},
+                {name: "बराह क्षेत्र", x: 0.5, y: 0.5},
+                {name: "बुढा सुब्बा", x: 0.5, y: 0.5},
+                {name: "पाथीभरा मन्दिर", x: 0.5, y: 0.5},
+                {name: "सिद्धबाबा", x: 0.5, y: 0.5},
+                {name: "काँक्रे विहार", x: 0.5, y: 0.5},
+                {name: "रुरू क्षेत्र", x: 0.5, y: 0.5},
+                {name: "कन्काई", x: 0.5, y: 0.5},
+                {name: "खप्तड बाबा", x: 0.5, y: 0.5}
+                
+            ];
+
+            let currentQuestionIndex = Math.floor(Math.random() * religiousPlaces.length);
+            const mapImage = document.getElementById('map-image');
+            const questionText = document.getElementById('question-text');
+            const userMarker = document.getElementById('user-marker');
+            const answerMarker = document.getElementById('answer-marker');
+            const showAnswerBtn = document.getElementById('show-answer-btn');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+
+            // Initialize first question
+            showQuestion();
+
+            // Event listeners
+            mapImage.addEventListener('click', handleMapClick);
+            showAnswerBtn.addEventListener('click', showAnswer);
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+
+            function showQuestion() {
+                const place = religiousPlaces[currentQuestionIndex];
+                questionText.textContent = `${place.name}`;
+                resetMarkers();
+            }
+
+            function handleMapClick(e) {
+                const rect = mapImage.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+
+                userMarker.style.left = `${x * 100}%`;
+                userMarker.style.top = `${y * 100}%`;
+                userMarker.classList.remove('hidden');
+            }
+
+            function showAnswer() {
+                const place = religiousPlaces[currentQuestionIndex];
+                answerMarker.style.left = `${place.x * 100}%`;
+                answerMarker.style.top = `${place.y * 100}%`;
+                answerMarker.classList.remove('hidden');
+                showAnswerBtn.disabled = true;
+            }
+
+            function nextQuestion() {
+                // Get a new random question index different from current
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * religiousPlaces.length);
+                } while (newIndex === currentQuestionIndex && religiousPlaces.length > 1);
+                
+                currentQuestionIndex = newIndex;
+                showQuestion();
+                showAnswerBtn.disabled = false;
+            }
+
+            function resetMarkers() {
+                userMarker.classList.add('hidden');
+                answerMarker.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
