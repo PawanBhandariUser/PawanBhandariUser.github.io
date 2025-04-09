@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" oncontextmenu="return false">
+<head>
+    <style>
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .allow-select {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Area - Samaik Mapwork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #0ea5e9, #1d4ed8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        #map-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        #map-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: crosshair;
+        }
+        .marker {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+        }
+        #user-marker {
+            color: #ef4444;
+            z-index: 10;
+        }
+        #answer-marker {
+            color: #10b981;
+            z-index: 5;
+        }
+        .btn {
+            transition: all 0.2s ease;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .area {
+            position: absolute;
+            border: 2px solid rgba(16, 185, 129, 0.5);
+            background-color: rgba(16, 185, 129, 0.2);
+            transform-origin: center;
+        }
+    </style>
+</head>
+<body class="bg-white font-['Poppins']">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-gray-100 to-blue-100 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold gradient-text">Samaik Mapwork</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
+                <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
+            </div>
+            <div class="md:hidden">
+                <i class="fas fa-bars text-gray-700 text-xl"></i>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pb-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Question Display -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <div class="text-center">
+                    <p class="text-gray-600 mb-2">यो प्रदेश कहाँ छ?</p>
+                    <h2 class="text-2xl md:text-3xl font-bold text-blue-600" id="question-text"></h2>
+                </div>
+            </div>
+
+            <!-- Interactive Map with Drawing Canvas -->
+            <div id="map-container" class="mb-8 relative">
+                <img 
+                    src="nepal.jpg" 
+                    alt="Province Map" 
+                    id="map-image"
+                    onerror="this.src='https://images.unsplash.com/photo-1607328900715-3a3d1d3e3d3d?ixid=M3wzNjM5Nzd8MHwxfHNlYXJjaHwxfHxuZXBalbCUyMG1hcHxlbnwwfHx8fDE3MDc1MjA0NTB8MA&ixlib=rb-4.0.3&w=800'"
+                >
+                <canvas id="drawing-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+                <div id="user-marker" class="marker hidden">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <div id="answer-marker" class="marker hidden">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+            </div>
+
+            <!-- Drawing Controls -->
+            <div class="flex gap-2 mb-4 justify-center">
+                <button id="clear-drawing" class="px-4 py-2 bg-gray-200 rounded-lg">
+                    <i class="fas fa-eraser mr-2"></i>Clear Drawing
+                </button>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                    id="show-answer-btn"
+                    class="btn px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg"
+                >
+                    उत्तर देखाउनुहोस्
+                </button>
+                <button 
+                    id="next-question-btn"
+                    class="btn px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg"
+                >
+                    अर्को प्रश्न
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const provinces = [
+                "मधेश प्रदेश", 
+                "कोशी प्रदेश", 
+                "बागमती प्रदेश", 
+                "गण्डकी प्रदेश", 
+                "लुम्बिनी प्रदेश", 
+                "कर्णाली प्रदेश", 
+                "सुदूरपश्चिम प्रदेश"
+            ];
+
+            let currentQuestionIndex = Math.floor(Math.random() * provinces.length);
+            const mapImage = document.getElementById('map-image');
+            const questionText = document.getElementById('question-text');
+            const userMarker = document.getElementById('user-marker');
+            const answerMarker = document.getElementById('answer-marker');
+            const showAnswerBtn = document.getElementById('show-answer-btn');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const clearDrawingBtn = document.getElementById('clear-drawing');
+
+            // Initialize first question
+            showQuestion();
+
+            // Drawing functionality
+            const canvas = document.getElementById('drawing-canvas');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+
+            function resizeCanvas() {
+                const rect = mapImage.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                canvas.style.width = rect.width + 'px';
+                canvas.style.height = rect.height + 'px';
+            }
+
+            function startDrawing(e) {
+                isDrawing = true;
+                const rect = canvas.getBoundingClientRect();
+                lastX = e.clientX - rect.left;
+                lastY = e.clientY - rect.top;
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                const currentX = e.clientX - rect.left;
+                const currentY = e.clientY - rect.top;
+
+                ctx.strokeStyle = '#000000';
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+                ctx.lineWidth = 3;
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(currentX, currentY);
+                ctx.stroke();
+
+                lastX = currentX;
+                lastY = currentY;
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+            }
+
+            // Event listeners for drawing
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Clear drawing button
+            clearDrawingBtn.addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+
+            // Initialize canvas size
+            window.addEventListener('load', resizeCanvas);
+            window.addEventListener('resize', resizeCanvas);
+
+            function showQuestion() {
+                const province = provinces[currentQuestionIndex];
+                questionText.textContent = `${province}`;
+                resetMarkers();
+                clearPreviousAreas();
+            }
+
+            function showAnswer() {
+                mapImage.src = "province.png";
+                showAnswerBtn.disabled = true;
+            }
+
+            function nextQuestion() {
+                // Clear the canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Reset map image
+                mapImage.src = "nepal.jpg";
+                
+                // Get a new random question index different from current
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * provinces.length);
+                } while (newIndex === currentQuestionIndex && provinces.length > 1);
+                
+                currentQuestionIndex = newIndex;
+                showQuestion();
+                showAnswerBtn.disabled = false;
+            }
+
+            function resetMarkers() {
+                userMarker.classList.add('hidden');
+                answerMarker.classList.add('hidden');
+            }
+
+            function clearPreviousAreas() {
+                const previousAreas = document.querySelectorAll('.area');
+                previousAreas.forEach(area => area.remove());
+            }
+
+            showAnswerBtn.addEventListener('click', showAnswer);
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+        });
+    </script>
+</body>
+</html>
