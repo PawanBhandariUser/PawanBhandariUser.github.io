@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" oncontextmenu="return false">
 <head>
+    <meta charset="UTF-8">
     <style>
         .no-select {
             -webkit-user-select: none;
@@ -15,8 +16,49 @@
             -ms-user-select: text;
             user-select: text;
         }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: white;
+            z-index: 50;
+            transition: right 0.3s ease-in-out;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.show {
+            right: 0;
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .mobile-menu-overlay.show {
+            opacity: 1;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+        }
     </style>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production Area - Samaik Mapwork</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -34,6 +76,7 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
+            touch-action: none;
         }
         #map-image {
             width: 100%;
@@ -81,12 +124,28 @@
                 <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
                 <a href="term.html" class="text-gray-700 hover:text-blue-600 font-medium">Terms</a>
             </div>
-            <div class="md:hidden">
-                <i class="fas fa-bars text-gray-700 text-xl"></i>
-            </div>
+            <button id="menuBtn" class="md:hidden text-gray-700" title="Toggle menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
         </div>
     </nav>
 
+    <!-- Mobile Menu -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+    <div id="mobileMenu" class="mobile-menu p-6">
+        <div class="flex justify-between items-center mb-8">
+            <div class="text-xl font-bold gradient-text">Menu</div>
+            <button id="closeMenu" class="text-gray-700" title="Close menu">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-4">
+            <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Home</a>
+            <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Practice</a>
+            <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">About Us</a>
+            <a href="term.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Terms</a>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 pb-12">
@@ -105,20 +164,14 @@
                     src="nepal.jpg" 
                     alt="Province Map" 
                     id="map-image"
-                    onerror="this.src='https://images.unsplash.com/photo-1607328900715-3a3d1d3e3d3d?ixid=M3wzNjM5Nzd8MHwxfHNlYXJjaHwxfHxuZXBalbCUyMG1hcHxlbnwwfHx8fDE3MDc1MjA0NTB8MA&ixlib=rb-4.0.3&w=800'"
+                    onerror="this.src='https://images.unsplash.com/photo-1589802829985-817e51171b92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'"
                 >
                 <canvas id="drawing-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
-                <div id="user-marker" class="marker hidden">
-                    <i class="fas fa-paint-brush"></i>
-                </div>
-                <div id="answer-marker" class="marker hidden">
-                    <i class="fas fa-paint-brush"></i>
-                </div>
             </div>
 
             <!-- Drawing Controls -->
             <div class="flex gap-2 mb-4 justify-center">
-                <button id="clear-drawing" class="px-4 py-2 bg-gray-200 rounded-lg">
+                <button id="clear-drawing" class="px-4 py-2 bg-gray-200 rounded-lg" title="Clear drawing">
                     <i class="fas fa-eraser mr-2"></i>Clear Drawing
                 </button>
             </div>
@@ -128,12 +181,14 @@
                 <button 
                     id="show-answer-btn"
                     class="btn px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg"
+                    title="Show answer"
                 >
                     उत्तर देखाउनुहोस्
                 </button>
                 <button 
                     id="next-question-btn"
                     class="btn px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg"
+                    title="Next question"
                 >
                     अर्को प्रश्न
                 </button>
@@ -156,8 +211,6 @@
             let currentQuestionIndex = Math.floor(Math.random() * provinces.length);
             const mapImage = document.getElementById('map-image');
             const questionText = document.getElementById('question-text');
-            const userMarker = document.getElementById('user-marker');
-            const answerMarker = document.getElementById('answer-marker');
             const showAnswerBtn = document.getElementById('show-answer-btn');
             const nextQuestionBtn = document.getElementById('next-question-btn');
             const clearDrawingBtn = document.getElementById('clear-drawing');
@@ -180,19 +233,27 @@
                 canvas.style.height = rect.height + 'px';
             }
 
+            function getCoordinates(e) {
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+                return { x, y };
+            }
+
             function startDrawing(e) {
                 isDrawing = true;
-                const rect = canvas.getBoundingClientRect();
-                lastX = e.clientX - rect.left;
-                lastY = e.clientY - rect.top;
+                const coords = getCoordinates(e);
+                lastX = coords.x;
+                lastY = coords.y;
             }
 
             function draw(e) {
                 if (!isDrawing) return;
+                e.preventDefault(); // Prevent scrolling on mobile
                 
-                const rect = canvas.getBoundingClientRect();
-                const currentX = e.clientX - rect.left;
-                const currentY = e.clientY - rect.top;
+                const coords = getCoordinates(e);
+                const currentX = coords.x;
+                const currentY = coords.y;
 
                 ctx.strokeStyle = '#000000';
                 ctx.lineJoin = 'round';
@@ -212,11 +273,23 @@
                 isDrawing = false;
             }
 
-            // Event listeners for drawing
+            // Event listeners for mouse drawing
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('mouseout', stopDrawing);
+
+            // Event listeners for touch drawing
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                startDrawing(e);
+            });
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                draw(e);
+            });
+            canvas.addEventListener('touchend', stopDrawing);
+            canvas.addEventListener('touchcancel', stopDrawing);
 
             // Clear drawing button
             clearDrawingBtn.addEventListener('click', () => {
@@ -230,8 +303,8 @@
             function showQuestion() {
                 const province = provinces[currentQuestionIndex];
                 questionText.textContent = `${province}`;
-                resetMarkers();
                 clearPreviousAreas();
+                showAnswerBtn.disabled = false;
             }
 
             function showAnswer() {
@@ -257,11 +330,6 @@
                 showAnswerBtn.disabled = false;
             }
 
-            function resetMarkers() {
-                userMarker.classList.add('hidden');
-                answerMarker.classList.add('hidden');
-            }
-
             function clearPreviousAreas() {
                 const previousAreas = document.querySelectorAll('.area');
                 previousAreas.forEach(area => area.remove());
@@ -269,28 +337,36 @@
 
             showAnswerBtn.addEventListener('click', showAnswer);
             nextQuestionBtn.addEventListener('click', nextQuestion);
-        });
-        
-        // Mobile menu functionality
-        const menuBtn = document.getElementById('menuBtn');
-        const closeMenu = document.getElementById('closeMenu');
-        const mobileMenu = document.getElementById('mobileMenu');
 
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('show');
-        });
+            // Mobile menu functionality
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const closeMenu = document.getElementById('closeMenu');
 
-        closeMenu.addEventListener('click', () => {
-            mobileMenu.classList.remove('show');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
-                mobileMenu.classList.remove('show');
+            function toggleMenu() {
+                mobileMenu.classList.toggle('show');
+                mobileMenuOverlay.classList.toggle('show');
+                document.body.style.overflow = mobileMenu.classList.contains('show') ? 'hidden' : '';
             }
+
+            menuBtn.addEventListener('click', toggleMenu);
+            closeMenu.addEventListener('click', toggleMenu);
+            mobileMenuOverlay.addEventListener('click', toggleMenu);
+
+            // Close menu when clicking menu items
+            const menuItems = mobileMenu.querySelectorAll('a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', toggleMenu);
+            });
+
+            // Close menu on window resize if open
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768 && mobileMenu.classList.contains('show')) {
+                    toggleMenu();
+                }
+            });
         });
-    
     </script>
 </body>
 </html>
