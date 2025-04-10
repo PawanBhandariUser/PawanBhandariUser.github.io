@@ -21,15 +21,26 @@
             color: white;
             font-weight: 600;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .colorful-box:hover {
+            transform: translateY(-5px);
         }
         .colorful-box:nth-child(2) {
             background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+        }
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.show {
+            transform: translateX(0);
         }
     </style>
 </head>
 <body class="bg-white font-['Poppins']">
     <!-- Navigation -->
-    <nav class="bg-gradient-to-r from-gray-100 to-blue-100 p-4 shadow-md">
+    <nav class="bg-gradient-to-r from-gray-100 to-blue-100 p-4 shadow-md relative">
         <div class="container mx-auto flex justify-between items-center">
             <div class="text-2xl font-bold gradient-text">Samaik Mapwork</div>
             <div class="hidden md:flex space-x-6">
@@ -37,8 +48,25 @@
                 <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
                 <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
             </div>
-            <div class="md:hidden">
-                <i class="fas fa-bars text-gray-700 text-xl"></i>
+            <button id="menuBtn" class="md:hidden text-gray-700 focus:outline-none" title="Open Menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 md:hidden">
+            <div class="p-4">
+                <div class="flex justify-between items-center mb-8">
+                    <div class="text-xl font-bold gradient-text">Menu</div>
+                    <button id="closeMenu" class="text-gray-700 focus:outline-none" title="Close Menu">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col space-y-4">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                    <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
+                    <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -77,14 +105,33 @@
                     © 2023 Samaik Mapwork. All rights reserved.
                 </div>
                 <div class="flex space-x-4">
-                    
                     <a href="term.html" class="text-gray-600 hover:text-blue-600">Terms of Service</a>
-                    <p  class="text-gray-600 hover:text-blue-600">Contact Us</p>
+                    <p class="text-gray-600 hover:text-blue-600">Contact Us</p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script>
+        // Mobile menu functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('show');
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('show');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
