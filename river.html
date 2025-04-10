@@ -60,7 +60,7 @@
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Religious Places Quiz - Samaik Mapwork</title>
+    <title>Rivers - Samaik Mapwork</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -105,6 +105,21 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+        #drawing-canvas {
+            touch-action: none;
+        }
+        .point-marker {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+        .answer-point {
+            background-color: #10b981;
+        }
     </style>
 </head>
 <body class="bg-white font-['Poppins']">
@@ -137,6 +152,7 @@
             <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Home</a>
             <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Practice</a>
             <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">About Us</a>
+            <a href="term.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Terms</a>
         </div>
     </div>
 
@@ -146,24 +162,27 @@
             <!-- Question Display -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-8">
                 <div class="text-center">
-                    <p class="text-gray-600 mb-2">यो धार्मिक स्थल कहाँ छ?</p>
+                    <p class="text-gray-600 mb-2">यो नदी कहाँ बग्छ?</p>
                     <h2 class="text-2xl md:text-3xl font-bold text-blue-600" id="question-text"></h2>
                 </div>
             </div>
 
-            <!-- Interactive Map -->
-            <div id="map-container" class="mb-8">
+            <!-- Interactive Map with Drawing Canvas -->
+            <div id="map-container" class="mb-8 relative">
                 <img 
                     src="nepal.jpg" 
                     alt="Nepal Map" 
                     id="map-image"
+                    onerror="this.src='https://images.unsplash.com/photo-1589802829985-817e51171b92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'"
                 >
-                <div id="user-marker" class="marker hidden">
-                    <i class="fas fa-place-of-worship"></i>
-                </div>
-                <div id="answer-marker" class="marker hidden">
-                    <i class="fas fa-place-of-worship"></i>
-                </div>
+                <canvas id="drawing-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+            </div>
+
+            <!-- Drawing Controls -->
+            <div class="flex gap-2 mb-4 justify-center">
+                <button id="clear-drawing" class="px-4 py-2 bg-gray-200 rounded-lg" title="Clear drawing">
+                    <i class="fas fa-eraser mr-2"></i>Clear Drawing
+                </button>
             </div>
 
             <!-- Controls -->
@@ -188,99 +207,209 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const religiousPlaces = [
-                {name: "पशुपतिनाथ मन्दिर", x: 0.5, y: 0.5},
-                {name: "तपोवन ", x: 0.5, y: 0.5},
-                {name: "शैलेश्वरी ", x: 0.5, y: 0.5},
-                {name: "उग्रतारा ", x: 0.5, y: 0.5},
-                {name: "देउती बजै ", x: 0.5, y: 0.5},
-                {name: "बागेश्वरी मन्दिर", x: 0.5, y: 0.5},
-                {name: "बाग्लुङ कालिका मन्दिर", x: 0.5, y: 0.5},
-                {name: "कालिका देवी मन्दिर", x: 0.5, y: 0.5},
-                {name: "कालिका मालिका गढी मन्दिर", x: 0.5, y: 0.5},
-                {name: "कालिका देवी मालिका गढी मन्दिर", x: 0.5, y: 0.5},
-                {name: "स्वर्गद्वारी मन्दिर", x: 0.5, y: 0.5},
-                {name: "लुम्बिनी", x: 0.5, y: 0.5},
-                {name: "विन्ध्यवासिनी मन्दिर", x: 0.5, y: 0.5},
-                {name: "मुक्तिनाथ मन्दिर", x: 0.5, y: 0.5},
-                {name: "मनकामना मन्दिर", x: 0.5, y: 0.5},
-                {name: "देवघाट मन्दिर", x: 0.5, y: 0.5},
-                {name: "गोसाइकुण्ड मन्दिर", x: 0.5, y: 0.5},
-                {name: "गढीमाई मन्दिर", x: 0.5, y: 0.5},
-                {name: "पलान्चोक भगवती मन्दिर", x: 0.5, y: 0.5},
-                {name: "स्याङबोचे स्तुपा", x: 0.5, y: 0.5},
-                {name: "हालेसी महादेव मन्दिर", x: 0.5, y: 0.5},
-                {name: "पराम जनकी मन्दिर", x: 0.5, y: 0.5},
-                {name: "छिन्नमस्ता मन्दिर", x: 0.5, y: 0.5},
-                {name: "बराह क्षेत्र", x: 0.5, y: 0.5},
-                {name: "बुढा सुब्बा", x: 0.5, y: 0.5},
-                {name: "पाथीभरा मन्दिर", x: 0.5, y: 0.5},
-                {name: "सिद्धबाबा", x: 0.5, y: 0.5},
-                {name: "काँक्रे विहार", x: 0.5, y: 0.5},
-                {name: "रुरू क्षेत्र", x: 0.5, y: 0.5},
-                {name: "कन्काई", x: 0.5, y: 0.5},
-                {name: "खप्तड बाबा", x: 0.5, y: 0.5}
+            const rivers = [
+                {
+                    name: "कोशी नदी",
+                    points: [
+                        {x: 0.8, y: 0.2},
+                        {x: 0.85, y: 0.3},
+                        {x: 0.87, y: 0.4},
+                        {x: 0.9, y: 0.5}
+                    ]
+                },
+                {
+                    name: "गण्डकी नदी",
+                    points: [
+                        {x: 0.5, y: 0.2},
+                        {x: 0.52, y: 0.3},
+                        {x: 0.55, y: 0.4},
+                        {x: 0.58, y: 0.5}
+                    ]
+                },
+                {
+                    name: "कर्णाली नदी",
+                    points: [
+                        {x: 0.2, y: 0.2},
+                        {x: 0.22, y: 0.3},
+                        {x: 0.25, y: 0.4},
+                        {x: 0.28, y: 0.5}
+                    ]
+                },
+                {
+                    name: "महाकाली नदी",
+                    points: [
+                        {x: 0.1, y: 0.2},
+                        {x: 0.12, y: 0.3},
+                        {x: 0.15, y: 0.4},
+                        {x: 0.18, y: 0.5}
+                    ]
+                },
+                {
+                    name: "बागमती नदी",
+                    points: [
+                        {x: 0.6, y: 0.2},
+                        {x: 0.62, y: 0.3},
+                        {x: 0.65, y: 0.4},
+                        {x: 0.68, y: 0.5}
+                    ]
+                }
             ];
 
-            let currentQuestionIndex = Math.floor(Math.random() * religiousPlaces.length);
+            let currentQuestionIndex = Math.floor(Math.random() * rivers.length);
             const mapImage = document.getElementById('map-image');
             const questionText = document.getElementById('question-text');
-            const userMarker = document.getElementById('user-marker');
-            const answerMarker = document.getElementById('answer-marker');
+            const canvas = document.getElementById('drawing-canvas');
+            const ctx = canvas.getContext('2d');
             const showAnswerBtn = document.getElementById('show-answer-btn');
             const nextQuestionBtn = document.getElementById('next-question-btn');
+            const clearDrawingBtn = document.getElementById('clear-drawing');
 
-            // Initialize first question
-            showQuestion();
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
 
-            // Event listeners for both mouse and touch
-            function handleInteraction(e) {
-                e.preventDefault();
+            function resizeCanvas() {
                 const rect = mapImage.getBoundingClientRect();
-                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-                const x = (clientX - rect.left) / rect.width;
-                const y = (clientY - rect.top) / rect.height;
-
-                userMarker.style.left = `${x * 100}%`;
-                userMarker.style.top = `${y * 100}%`;
-                userMarker.classList.remove('hidden');
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                canvas.style.width = rect.width + 'px';
+                canvas.style.height = rect.height + 'px';
             }
 
-            mapImage.addEventListener('click', handleInteraction);
-            mapImage.addEventListener('touchstart', handleInteraction);
-            showAnswerBtn.addEventListener('click', showAnswer);
-            nextQuestionBtn.addEventListener('click', nextQuestion);
-
             function showQuestion() {
-                const place = religiousPlaces[currentQuestionIndex];
-                questionText.textContent = `${place.name}`;
-                resetMarkers();
+                const river = rivers[currentQuestionIndex];
+                questionText.textContent = `${river.name}`;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                clearPreviousAreas();
+                showAnswerBtn.disabled = false;
+            }
+
+            function clearPreviousAreas() {
+                const previousAreas = document.querySelectorAll('.area');
+                previousAreas.forEach(area => area.remove());
+            }
+
+            function startDrawing(e) {
+                isDrawing = true;
+                const coords = getCoordinates(e);
+                lastX = coords.x;
+                lastY = coords.y;
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                e.preventDefault(); // Prevent scrolling on mobile
+                
+                const coords = getCoordinates(e);
+                const currentX = coords.x;
+                const currentY = coords.y;
+
+                ctx.strokeStyle = '#000000';
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+                ctx.lineWidth = 3;
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(currentX, currentY);
+                ctx.stroke();
+
+                lastX = currentX;
+                lastY = currentY;
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+            }
+
+            function getCoordinates(e) {
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+                return { x, y };
+            }
+
+            // Event listeners for mouse drawing
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Event listeners for touch drawing
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                startDrawing(e);
+            });
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                draw(e);
+            });
+            canvas.addEventListener('touchend', stopDrawing);
+            canvas.addEventListener('touchcancel', stopDrawing);
+
+            // Clear drawing button
+            clearDrawingBtn.addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+
+            function drawLine(points, color = '#000000') {
+                if (points.length < 2) return;
+                
+                ctx.beginPath();
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                const firstPoint = points[0];
+                ctx.moveTo(firstPoint.x * canvas.width, firstPoint.y * canvas.height);
+
+                for (let i = 1; i < points.length; i++) {
+                    const point = points[i];
+                    ctx.lineTo(point.x * canvas.width, point.y * canvas.height);
+                }
+
+                ctx.stroke();
+
+                // Draw points
+                points.forEach(point => {
+                    ctx.beginPath();
+                    ctx.fillStyle = color;
+                    ctx.arc(point.x * canvas.width, point.y * canvas.height, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                });
             }
 
             function showAnswer() {
-                const place = religiousPlaces[currentQuestionIndex];
-                answerMarker.style.left = `${place.x * 100}%`;
-                answerMarker.style.top = `${place.y * 100}%`;
-                answerMarker.classList.remove('hidden');
+                const river = rivers[currentQuestionIndex];
+                drawLine(river.points, '#10b981');
                 showAnswerBtn.disabled = true;
             }
 
+            showAnswerBtn.addEventListener('click', showAnswer);
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+
             function nextQuestion() {
+                // Clear the canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Get a new random question index different from current
                 let newIndex;
                 do {
-                    newIndex = Math.floor(Math.random() * religiousPlaces.length);
-                } while (newIndex === currentQuestionIndex && religiousPlaces.length > 1);
+                    newIndex = Math.floor(Math.random() * rivers.length);
+                } while (newIndex === currentQuestionIndex && rivers.length > 1);
                 
                 currentQuestionIndex = newIndex;
                 showQuestion();
                 showAnswerBtn.disabled = false;
             }
 
-            function resetMarkers() {
-                userMarker.classList.add('hidden');
-                answerMarker.classList.add('hidden');
-            }
+            // Initialize canvas size
+            window.addEventListener('load', resizeCanvas);
+            window.addEventListener('resize', resizeCanvas);
+
+            // Initialize first question
+            showQuestion();
 
             // Mobile menu functionality
             const menuBtn = document.getElementById('menuBtn');
