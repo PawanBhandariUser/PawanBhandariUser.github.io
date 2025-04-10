@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" oncontextmenu="return false">
 <head>
+    <meta charset="UTF-8">
     <style>
         .no-select {
             -webkit-user-select: none;
@@ -15,8 +16,49 @@
             -ms-user-select: text;
             user-select: text;
         }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: white;
+            z-index: 50;
+            transition: right 0.3s ease-in-out;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.show {
+            right: 0;
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .mobile-menu-overlay.show {
+            opacity: 1;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+        }
     </style>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mountain Quiz - Samaik Mapwork</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -74,11 +116,27 @@
                 <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
                 <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
             </div>
-            <div class="md:hidden">
-                <i class="fas fa-bars text-gray-700 text-xl"></i>
-            </div>
+            <button id="menuBtn" class="md:hidden text-gray-700" title="Open mobile menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+    <div id="mobileMenu" class="mobile-menu p-6">
+        <div class="flex justify-between items-center mb-8">
+            <div class="text-xl font-bold gradient-text">Menu</div>
+            <button id="closeMenu" class="text-gray-700" title="Close mobile menu">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-4">
+            <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Home</a>
+            <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Practice</a>
+            <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">About Us</a>
+        </div>
+    </div>
 
     <!-- Banner -->
     <section class="py-12 px-4 text-center">
@@ -118,12 +176,14 @@
                 <button 
                     id="show-answer-btn"
                     class="btn px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg"
+                    title="Show the answer"
                 >
                     उत्तर देखाउनुहोस्
                 </button>
                 <button 
                     id="next-question-btn"
                     class="btn px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg"
+                    title="Next question"
                 >
                     अर्को प्रश्न
                 </button>
@@ -162,9 +222,6 @@
                 {name: "श्रृङ्गी हिमाल",x:0.58,y:0.46},
                 {name: "धुञ्चे हिमाल",x: 0.68, y: 0.55},
                 {name: "कञ्चनजङ्घा हिमाल",x: 0.96, y: 0.69}
-
-                
-
             ];
 
             let currentQuestionIndex = Math.floor(Math.random() * mountains.length);
@@ -208,7 +265,6 @@
             }
 
             function nextQuestion() {
-                // Get a new random question index different from current
                 let newIndex;
                 do {
                     newIndex = Math.floor(Math.random() * mountains.length);
@@ -223,28 +279,36 @@
                 userMarker.classList.add('hidden');
                 answerMarker.classList.add('hidden');
             }
-        });
-        
-        // Mobile menu functionality
-        const menuBtn = document.getElementById('menuBtn');
-        const closeMenu = document.getElementById('closeMenu');
-        const mobileMenu = document.getElementById('mobileMenu');
 
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('show');
-        });
+            // Mobile menu functionality
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const closeMenu = document.getElementById('closeMenu');
 
-        closeMenu.addEventListener('click', () => {
-            mobileMenu.classList.remove('show');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
-                mobileMenu.classList.remove('show');
+            function toggleMenu() {
+                mobileMenu.classList.toggle('show');
+                mobileMenuOverlay.classList.toggle('show');
+                document.body.style.overflow = mobileMenu.classList.contains('show') ? 'hidden' : '';
             }
+
+            menuBtn.addEventListener('click', toggleMenu);
+            closeMenu.addEventListener('click', toggleMenu);
+            mobileMenuOverlay.addEventListener('click', toggleMenu);
+
+            // Close menu when clicking menu items
+            const menuItems = mobileMenu.querySelectorAll('a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', toggleMenu);
+            });
+
+            // Close menu on window resize if open
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768 && mobileMenu.classList.contains('show')) {
+                    toggleMenu();
+                }
+            });
         });
-    
     </script>
 </body>
 </html>
