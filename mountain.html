@@ -97,12 +97,18 @@
             color: #10b981;
             z-index: 5;
         }
-        .btn {
+        .btn1 {
+            box-shadow: 1.6px 1.6px 1px rgb(1, 116, 29);
             transition: all 0.2s ease;
         }
-        .btn:disabled {
+        .btn1:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+        .btn2{
+            box-shadow: 1.6px 1.6px 1px rgb(2, 2, 251);
+            transition: all 0.2s ease;
+
         }
     </style>
 </head>
@@ -177,14 +183,14 @@
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button 
                     id="show-answer-btn"
-                    class="btn px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg"
+                    class="btn1 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg"
                     title="Show the answer"
                 >
                     उत्तर देखाउनुहोस्
                 </button>
                 <button 
                     id="next-question-btn"
-                    class="btn px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg"
+                    class="btn2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg"
                     title="Next question"
                 >
                     अर्को प्रश्न
