@@ -83,15 +83,17 @@
             border-radius: 10px;
             color: white;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
-            border-width: 2px;
+            border: 0.1px solid black;
         }
         .colorful-box:hover {
             transform: translateY(-20px);
+            box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.5);
         }
         .colorful-box:nth-child(2) {
             background: linear-gradient(135deg, #78ffd6,#a8ff78);
+            border: 0.1px solid black;
         }
         .stuck {
             position: sticky;
