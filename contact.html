@@ -10,9 +10,8 @@
             -ms-user-select: none;
             user-select: none;
         }
-        .allow-select,
-        input, textarea, button, [contenteditable],
-        .map-card h3 {
+        
+        .allow-select {
             -webkit-user-select: text;
             -moz-user-select: text;
             -ms-user-select: text;
@@ -60,9 +59,8 @@
                 display: block;
             }
         }
-        
     </style>
-    <title>Practice - Samaik Mapwork</title>
+    <title>Samaik Mapwork</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -73,30 +71,12 @@
             background-clip: text;
             color: transparent;
         }
-        .map-card {
-            transition: transform 0.3s ease;
-            background: white;
-            color: black;
-            border: 1px solid #ddd;
-            text-align: center;
-            width: 100%;
-            max-width: 350px;
-            z-index: 100px;
-        }
-        .map-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .map-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-        .stuck{
+        
+        .stuck {
             position: sticky;
             top: 0px;
-            z-index: 100;           
         }
+           
     </style>
 </head>
 <body class="bg-white font-['Poppins']">
@@ -105,8 +85,8 @@
         <div class="container mx-auto flex justify-between items-center">
             <div class="text-2xl font-bold gradient-text">Samaik Mapwork</div>
             <div class="hidden md:flex space-x-6">
-                <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
-                <a href="practice.html" class="text-blue-600 font-medium">Practice</a>
+                <a href="index.html" class="text-blue-700 hover:text-blue-600 font-medium">Home</a>
+                <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
                 <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
                 <a href="term.html" class="text-gray-700 hover:text-blue-600 font-medium">Terms</a>
             </div>
@@ -126,90 +106,29 @@
             </button>
         </div>
         <div class="flex flex-col space-y-4">
-            <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Home</a>
-            <a href="practice.html" class="text-blue-600 font-medium py-2">Practice</a>
+            <a href="index.html" class="text-blue-700 hover:text-blue-600 font-medium py-2">Home</a>
+            <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Practice</a>
             <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">About Us</a>
             <a href="term.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Terms</a>
         </div>
     </div>
 
-    <!-- Banner -->
     <section class="py-16 px-4 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Practice Maps</h1>
-        <p class="text-gray-600 max-w-2xl mx-auto">Test your geographical knowledge with our interactive exercises</p>
+        <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">CONTACT US</h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">Help us improve</p>
     </section>
 
-    <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-            <a href="mountain.html" class="map-card rounded-lg shadow-md overflow-hidden p-6">
-                <img 
-                    src="https://images.unsplash.com/photo-1610878180933-123728745d22?ixlib=rb-4.0.3&auto=format&fit=crop&w=800" 
-                    class="map-image" 
-                    alt="Topographical map of mountain ranges">
-                <h3 class="text-xl font-semibold mt-2">Mountains (हिमालहरू)</h3>
-            </a>
-
-            <a href="highway.html" class="map-card rounded-lg shadow-md overflow-hidden p-6">
-                <img 
-                    src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800" 
-                    class="map-image" 
-                    alt="Road network map">
-                <h3 class="text-xl font-semibold mt-2">Highways (राजमार्गहरू)</h3>
-            </a>
-
-            <a href="river.html" class="map-card rounded-lg shadow-md overflow-hidden p-6">
-                <img 
-                    src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=800" 
-                    class="map-image" 
-                    alt="River basin map">
-                <h3 class="text-xl font-semibold mt-2">Rivers (नदीहरू)</h3>
-            </a>
-
-            <a href="national.html" class="map-card rounded-lg shadow-md overflow-hidden p-6">
-                <img 
-                    src="chitwan.jpg" 
-                    class="map-image" 
-                    alt="National park boundary map">
-                <h3 class="text-xl font-semibold mt-2">National Parks (राष्ट्रिय निकुञ्जहरू)</h3>
-            </a>
-
-            <a href="production.html" class="map-card rounded-lg shadow-md overflow-hidden p-6">
-                <img 
-                    src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800" 
-                    class="map-image" 
-                    alt="Agricultural production map">
-                <h3 class="text-xl font-semibold mt-2">Production Areas (उत्पादन क्षेत्रहरू)</h3>
-            </a>
-
-            <a href="religious.html" class="map-card rounded-lg shadow-md overflow-hidden p-6">
-                <img 
-                    src="temple.jpg" 
-                    class="map-image" 
-                    alt="Religious sites map">
-                <h3 class="text-xl font-semibold mt-2">Religious Places (धार्मिक स्थलहरू)</h3>
-            </a>
-
-            <a href="province.html" class="map-card rounded-lg shadow-md overflow-hidden p-6">
-                <img 
-                    src="province.png" 
-                    class="map-image" 
-                    alt="Province map">
-                <h3 class="text-xl font-semibold mt-2">Provinces (प्रदेशहरू)</h3>
-            </a>
-
-            <a href="commerce.html" class="map-card rounded-lg shadow-md overflow-hidden p-6">
-                <img 
-                    src="trade.png" 
-                    class="map-image" 
-                    alt="Geographical locations map">
-                <h3 class="text-xl font-semibold mt-2">Commercial centers (व्यापारीक केन्द्रहरू)</h3>
-            </a>
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 ">If you find any problems,</h2>  
+            <p class="text-gray-600 mb-4">
+                Please contact us at pawanbhandari.log@gmail.com
+            </p>
         </div>
     </main>
 
-     <!-- Footer -->
-     <footer class="bg-gray-100 py-8">
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="text-gray-600 mb-4 md:mb-0">
