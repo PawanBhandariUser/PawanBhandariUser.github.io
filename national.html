@@ -223,25 +223,25 @@
         document.addEventListener('DOMContentLoaded', () => {
             const nationalParks = [
                 {name: "चितवन राष्ट्रिय निकुञ्ज", x: 0.45, y: 0.7, width: 0.1, height: 0.08, angle: 0},
-                {name: "बर्दिया राष्ट्रिय निकुञ्ज", x: 0.3, y: 0.8, width: 0.12, height: 0.07, angle: 10},
-                {name: "सगरमाथा राष्ट्रिय निकुञ्ज", x: 0.7, y: 0.2, width: 0.08, height: 0.12, angle: 15},
-                {name: "लाङटाङ राष्ट्रिय निकुञ्ज", x: 0.6, y: 0.3, width: 0.09, height: 0.06, angle: 5},
+                {name: "बर्दिया राष्ट्रिय निकुञ्ज", x: 0.14, y: 0.45, width: 0.12, height: 0.07, angle: 10},
+                {name: "सगरमाथा राष्ट्रिय निकुञ्ज", x: 0.8, y: 0.6, width: 0.08, height: 0.12, angle: 15},
+                {name: "लाङटाङ राष्ट्रिय निकुञ्ज", x: 0.64, y: 0.55, width: 0.09, height: 0.1, angle: 30},
                 {name: "शे-फोक्सुण्डो राष्ट्रिय निकुञ्ज", x: 0.5, y: 0.4, width: 0.1, height: 0.08, angle: 0},
                 {name: "मकालु-बरुन राष्ट्रिय निकुञ्ज", x: 0.8, y: 0.5, width: 0.07, height: 0.1, angle: 20},
-                {name: "शिवपुरी-नागार्जुन राष्ट्रिय निकुञ्ज", x: 0.4, y: 0.6, width: 0.08, height: 0.05, angle: 10},
+                {name: "शिवपुरी-नागार्जुन राष्ट्रिय निकुञ्ज", x: 0.63, y: 0.63, width: 0.04, height: 0.05, angle: 12},
                 {name: "बाँके राष्ट्रिय निकुञ्ज", x: 0.35, y: 0.75, width: 0.1, height: 0.06, angle: 5},
-                {name: "खप्तड राष्ट्रिय निकुञ्ज", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
-                {name: "पर्सा राष्ट्रिय निकुञ्ज", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
-                {name: "रारा राष्ट्रिय निकुञ्ज", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
-                {name: "शुक्लाफाँटा राष्ट्रिय निकुञ्ज", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
+                {name: "खप्तड राष्ट्रिय निकुञ्ज", x: 0.1, y: 0.25, width: 0.5, height: 0.07, angle: 15},
+                {name: "पर्सा राष्ट्रिय निकुञ्ज", x: 0.55, y: 0.7, width: 0.08, height: 0.07, angle: 15},
+                {name: "रारा राष्ट्रिय निकुञ्ज", x: 0.17, y: 0.24, width: 0.02, height: 0.05, angle: 15},
+                {name: "शुक्लाफाँटा राष्ट्रिय निकुञ्ज", x: 0.001, y: 0.4, width: 0.05, height: 0.1, angle: 30},
                 {name: "अन्नपूर्ण संरक्षण क्षेत्र", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
                 {name: "मनास्लु संरक्षण क्षेत्र", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
-                {name: "कञ्चनजङ्गा संरक्षण क्षेत्र", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
-                {name: "गौरीशंकर संरक्षण क्षेत्र", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
-                {name: "अपी नाम्पा संरक्षण क्षेत्र", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
+                {name: "कञ्चनजङ्गा संरक्षण क्षेत्र", x: 0.92, y: 0.6, width: 0.05, height: 0.1, angle: -5},
+                {name: "गौरीशंकर संरक्षण क्षेत्र", x: 0.72, y: 0.6, width: 0.06, height: 0.1, angle: 0},
+                {name: "अपी नाम्पा संरक्षण क्षेत्र",x: 0.1, y: 0.09, width: 0.06, height: 0.1, angle: 0},
                 {name: "कृष्णसार संरक्षण क्षेत्र", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
-                {name: "कोशी टप्पु वन्यजन्तु आरक्ष", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15},
-                {name: "ढोरपाटन शिकार आरक्ष", x: 0.25, y: 0.5, width: 0.12, height: 0.07, angle: 15}
+                {name: "कोशी टप्पु वन्यजन्तु आरक्ष", x: 0.84, y: 0.9, width: 0.14, height: 0.04, angle: 15},
+                {name: "ढोरपाटन शिकार आरक्ष", x: 0.28, y: 0.46, width: 0.09, height: 0.14, angle: 15}
             ];
 
             let currentQuestionIndex = Math.floor(Math.random() * nationalParks.length);
