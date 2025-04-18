@@ -116,7 +116,7 @@
     <!-- Navigation -->
     <nav class="bg-gradient-to-r from-gray-100 to-blue-100 p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-2xl font-bold gradient-text">Samaik Mapwork</div>
+            <div class="text-2xl font-bold gradient-text">Samajik Mapwork</div>
             <div class="hidden md:flex space-x-6">
                 <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
                 <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
@@ -216,36 +216,39 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const mountains = [
-                {name: "ल्होत्से हिमाल", x: 0.81, y: 0.63},
-                {name: "कुम्भकर्ण हिमाल", x: 0.91, y: 0.71},               
-                {name: "अपि हिमाल", x: 0.15, y: 0.15},
-                {name: "सैपाल हिमाल", x: 0.189, y: 0.15},
-                {name: "लाङ्टाङ हिमाल", x: 0.68, y: 0.55},
-                {name: "कान्ति हिमाल", x: 0.34, y: 0.22},
-                {name: "सगरमाथा", x: 0.83, y: 0.61},
-                {name: "माछापुच्छ्रे हिमाल", x: 0.49, y: 0.48},
-                {name: "याग्रा हिमाल", x: 0.62, y: 0.52},
-                {name: "पुमरी हिमाल", x: 0.81, y: 0.593},
-                {name: "कान्जिरोबा हिमाल", x: 0.33, y: 0.3},
-                {name: "चोयु हिमाल", x: 0.799, y: 0.58},
-                {name: "अन्नपूर्ण हिमाल", x: 0.48, y: 0.46},
-                {name: "रत्नचुली हिमाल", x: 0.52, y: 0.42},
-                {name: "हिमचुली हिमाल", x: 0.473, y: 0.4},
-                {name: "गौरीशङ्कर हिमाल", x: 0.74, y: 0.59},
-                {name: "जनक हिम श्रृङ्खला",x : 0.975, y : 0.62},
-                {name: "गुराँस हिमाल",x : 0.19,y : 0.07},
-                {name: "चाङ्ला हिमाल",x : 0.216,y : 0.09 },
-                {name: "ब्यास हिमाल",x : 0.18,y : 0.13},
-                {name: "गोरख हिमाल",x:0.3,y:0.14},
-                {name: "गौतम हिमाल",x:0.38,y:0.26},
-                {name: "धौलागिरी हिमाल",x:0.43,y:0.4},
-                {name: "मनास्लु हिमाल",x:0.54,y:0.41},
-                {name: "गणेश हिमाल",x:0.594,y:0.48},
-                {name: "श्रृङ्गी हिमाल",x:0.58,y:0.46},
-                {name: "धुञ्चे हिमाल",x: 0.68, y: 0.55},
-                {name: "कञ्चनजङ्घा हिमाल",x: 0.96, y: 0.69}
-            ];
+            const mountains =[
+  { name: "बागलुङ", x: 0.477, y: 0.467 },
+  { name: "भद्रपुर", x: 0.962, y: 0.820 },
+  { name: "भरतपुर", x: 0.505, y: 0.662 },
+  { name: "भैरहवा", x: 0.378, y: 0.656 },
+  { name: "विराटनगर", x: 0.885, y: 0.875 },
+  { name: "वीरगञ्ज", x: 0.582, y: 0.778 },
+  { name: "बुटवल", x: 0.402, y: 0.615 },
+  { name: "चारिकोट", x: 0.719, y: 0.684 },
+  { name: "दाङ", x: 0.312, y: 0.520 },
+  { name: "दैलेख", x: 0.264, y: 0.410 },
+  { name: "दार्चुला", x: 0.139, y: 0.092 },
+  { name: "डडेलधुरा", x: 0.143, y: 0.222 },
+  { name: "धनगढी", x: 0.074, y: 0.361 },
+  { name: "धनकुटा", x: 0.789, y: 0.741 }, 
+  { name: "दिपायल", x: 0.177, y: 0.328 },
+  { name: "डोल्पा (दुनै)", x: 0.347, y: 0.333 },
+  { name: "गौर", x: 0.615, y: 0.797 },
+  { name: "हेटौंडा", x: 0.631, y: 0.726 },
+  { name: "हेलम्बु", x: 0.606, y: 0.573 },
+  { name: "इलाम", x: 0.883, y: 0.724 },
+  { name: "जनकपुर", x: 0.666, y: 0.812 },
+  { name: "जुम्ला", x: 0.357, y: 0.251 },
+  { name: "काठमाडौं", x: 0.625, y: 0.628 },
+  { name: "नाम्चे बजार", x: 0.806, y: 0.659 },
+  { name: "नेपालगञ्ज", x: 0.199, y: 0.489 },
+  { name: "पोखरा", x: 0.499, y: 0.529 },
+  { name: "राजविराज", x: 0.755, y: 0.865 },
+  { name: "सिमिकोट", x: 0.245, y: 0.160 },
+  { name: "सुर्खेत", x: 0.183, y: 0.424 },
+  { name: "तुल्सीपुर", x: 0.342, y: 0.574 },
+  { name: "बैतडी", x: 0.108, y: 0.130 }
+                ];
 
             let currentQuestionIndex = Math.floor(Math.random() * mountains.length);
             const mapImage = document.getElementById('map-image');

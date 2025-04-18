@@ -1,1 +1,345 @@
-<p>Coming Soon</p>
+<!DOCTYPE html>
+<html lang="en" oncontextmenu="return false">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .allow-select {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: white;
+            z-index: 50;
+            transition: right 0.3s ease-in-out;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.show {
+            right: 0;
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .mobile-menu-overlay.show {
+            opacity: 1;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Centers - Samaik Mapwork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #0ea5e9, #1d4ed8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        #map-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        #map-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: crosshair;
+        }
+        .marker {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+        }
+        #user-marker {
+            color: #ef4444;
+            z-index: 10;
+        }
+        #answer-marker {
+            color: #10b981;
+            z-index: 5;
+        }
+        .btn1 {
+            box-shadow: 1.6px 1.6px 1px rgb(1, 116, 29);
+            transition: all 0.2s ease;
+        }
+        .btn1:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn2{
+            box-shadow: 1.6px 1.6px 1px rgb(2, 2, 251);
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-white font-['Poppins']">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-gray-100 to-blue-100 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold gradient-text">Samajik Mapwork</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
+                <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
+                <a href="term.html" class="text-gray-700 hover:text-blue-600 font-medium">Terms</a>
+            </div>
+            <button id="menuBtn" class="md:hidden text-gray-700" title="Open mobile menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+    <div id="mobileMenu" class="mobile-menu p-6">
+        <div class="flex justify-between items-center mb-8">
+            <div class="text-xl font-bold gradient-text">Menu</div>
+            <button id="closeMenu" class="text-gray-700" title="Close mobile menu">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-4">
+            <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Home</a>
+            <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Practice</a>
+            <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">About Us</a>
+            <a href="term.html" class="text-gray-700 hover:text-blue-600 font-medium">Terms</a>
+        </div>
+    </div>
+
+    <!-- Banner -->
+    <section class="py-12 px-4 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold gradient-text mb-4">नेपालका व्यापारिक केन्द्रहरू</h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">नक्सामा व्यापारिक केन्द्रहरूको स्थान चिन्नुहोस्</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pb-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Question Display -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <div class="text-center">
+                    <p class="text-gray-600 mb-2">यो व्यापारिक केन्द्र कहाँ छ?</p>
+                    <h2 class="text-2xl md:text-3xl font-bold text-blue-600" id="question-text"></h2>
+                </div>
+            </div>
+
+            <!-- Interactive Map -->
+            <div id="map-container" class="mb-8">
+                <img 
+                    src="nepal.jpg" 
+                    alt="Nepal Map" 
+                    id="map-image"
+                >
+                <div id="user-marker" class="marker hidden">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div id="answer-marker" class="marker hidden">
+                    <i class="fas fa-store"></i>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                    id="show-answer-btn"
+                    class="btn1 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg"
+                    title="Show the answer"
+                >
+                    उत्तर देखाउनुहोस्
+                </button>
+                <button 
+                    id="next-question-btn"
+                    class="btn2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg"
+                    title="Next question"
+                >
+                    अर्को प्रश्न
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-600 mb-4 md:mb-0">
+                    © 2023 Samaik Mapwork. All rights reserved.
+                </div>
+                <div class="flex space-x-4">
+                    <a href="term.html" class="text-gray-600 hover:text-blue-600">Terms of Service</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-blue-600">Contact Us</a> 
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const commercialCenters = [
+  { name: "बागलुङ", x: 0.44, y: 0.46 },
+  { name: "भद्रपुर", x: 0.96, y: 0.82 },
+  { name: "भरतपुर", x: 0.50, y: 0.66 },
+  { name: "भैरहवा", x: 0.38, y: 0.65 },
+  { name: "विराटनगर", x: 0.89, y: 0.87 },
+  { name: "वीरगञ्ज", x: 0.58, y: 0.78 },
+  { name: "बुटवल", x: 0.40, y: 0.61 },
+  { name: "चारिकोट", x: 0.72, y: 0.68 },
+  { name: "दाङ", x: 0.31, y: 0.52 },
+  { name: "दैलेख", x: 0.26, y: 0.41 },
+  { name: "दार्चुला", x: 0.14, y: 0.09 },
+  { name: "डडेलधुरा", x: 0.14, y: 0.22 },
+  { name: "धनगढी", x: 0.07, y: 0.36 },
+  { name: "धनकुटा", x: 0.80, y: 0.77 },
+  { name: "डिपायल", x: 0.18, y: 0.33 },
+  { name: "डोल्पा (दुनै)", x: 0.35, y: 0.33 },
+  { name: "गौर", x: 0.61, y: 0.79 },
+  { name: "हेटौंडा", x: 0.63, y: 0.72 },
+  { name: "हेलम्बु", x: 0.60, y: 0.57 },
+  { name: "इलाम", x: 0.88, y: 0.72 },
+  { name: "जनकपुर", x: 0.67, y: 0.81 },
+  { name: "जुम्ला", x: 0.36, y: 0.25 },
+  { name: "काठमाडौं", x: 0.62, y: 0.63 },
+  { name: "नाम्चे बजार", x: 0.80, y: 0.66 },
+  { name: "नेपालगञ्ज", x: 0.20, y: 0.49 },
+  { name: "पोखरा", x: 0.49, y: 0.53 },
+  { name: "राजविराज", x: 0.75, y: 0.87 },
+  { name: "सिमिकोट", x: 0.25, y: 0.16 },
+  { name: "सुर्खेत", x: 0.18, y: 0.42 },
+  { name: "तुल्सीपुर", x: 0.34, y: 0.57 },
+  { name: "बैतडी", x: 0.11, y: 0.13 }
+];
+
+            let currentQuestionIndex = 0;
+            const mapImage = document.getElementById('map-image');
+            const questionText = document.getElementById('question-text');
+            const userMarker = document.getElementById('user-marker');
+            const answerMarker = document.getElementById('answer-marker');
+            const showAnswerBtn = document.getElementById('show-answer-btn');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+
+            // Initialize first question
+            showQuestion();
+
+            // Event listeners
+            mapImage.addEventListener('click', handleMapClick);
+            showAnswerBtn.addEventListener('click', showAnswer);
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+
+            function showQuestion() {
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * commercialCenters.length);
+                } while (newIndex === currentQuestionIndex && commercialCenters.length > 1);
+                    
+                currentQuestionIndex = newIndex;
+                
+                const center = commercialCenters[currentQuestionIndex];
+                questionText.textContent = `${center.name}`;
+                resetMarkers();
+                
+            }
+
+            function handleMapClick(e) {
+                const rect = mapImage.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+
+                userMarker.style.left = `${x * 100}%`;
+                userMarker.style.top = `${y * 100}%`;
+                userMarker.classList.remove('hidden');
+            }
+
+            function showAnswer() {
+                if (commercialCenters.length > 0) {
+                    const center = commercialCenters[currentQuestionIndex];
+                    answerMarker.style.left = `${center.x * 100}%`;
+                    answerMarker.style.top = `${center.y * 100}%`;
+                    answerMarker.classList.remove('hidden');
+                    showAnswerBtn.disabled = true;
+                }
+            }
+
+            function nextQuestion() {
+                if (commercialCenters.length > 0) {
+                    
+                    showQuestion();
+                    showAnswerBtn.disabled = false;
+                }
+            }
+
+            function resetMarkers() {
+                userMarker.classList.add('hidden');
+                answerMarker.classList.add('hidden');
+            }
+
+            // Mobile menu functionality
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const closeMenu = document.getElementById('closeMenu');
+
+            function toggleMenu() {
+                mobileMenu.classList.toggle('show');
+                mobileMenuOverlay.classList.toggle('show');
+                document.body.style.overflow = mobileMenu.classList.contains('show') ? 'hidden' : '';
+            }
+
+            menuBtn.addEventListener('click', toggleMenu);
+            closeMenu.addEventListener('click', toggleMenu);
+            mobileMenuOverlay.addEventListener('click', toggleMenu);
+
+            // Close menu when clicking menu items
+            const menuItems = mobileMenu.querySelectorAll('a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', toggleMenu);
+            });
+
+            // Close menu on window resize if open
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768 && mobileMenu.classList.contains('show')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
