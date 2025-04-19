@@ -128,10 +128,10 @@
         <div class="container mx-auto flex justify-between items-center">
             <div class="text-2xl font-bold gradient-text">Samajik Mapwork</div>
             <div class="hidden md:flex space-x-6">
-                <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
-                <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
-                <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
-                <a href="term.html" class="text-gray-700 hover:text-blue-600 font-medium">Terms</a>
+                <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium ">Home</a>
+                <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium ">Practice</a>
+                <a href="notes.html" class="text-gray-700 hover:text-blue-600 font-medium ">Notes</a>
+                <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium ">About Us</a>
             </div>
             <button id="menuBtn" class="md:hidden text-gray-700" title="Toggle menu">
                 <i class="fas fa-bars text-xl"></i>
@@ -151,8 +151,8 @@
         <div class="flex flex-col space-y-4">
             <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Home</a>
             <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Practice</a>
+            <a href="notes.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Notes</a>
             <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">About Us</a>
-            <a href="term.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Terms</a>
         </div>
     </div>
 
@@ -223,91 +223,35 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const rivers = [
-                {
-                    name: "कोशी नदी",
-                    points: [
-                        {x: 0.85, y: 0.2},
-                        {x: 0.83, y: 0.35},
-                        {x: 0.82, y: 0.5},
-                        {x: 0.81, y: 0.65},
-                        {x: 0.80, y: 0.8}
-                    ]
-                },
-                {
-                    name: "गण्डकी नदी",
-                    points: [
-                        {x: 0.55, y: 0.2},
-                        {x: 0.54, y: 0.35},
-                        {x: 0.53, y: 0.5},
-                        {x: 0.52, y: 0.65},
-                        {x: 0.51, y: 0.8}
-                    ]
-                },
-                {
-                    name: "कर्णाली नदी",
-                    points: [
-                        {x: 0.25, y: 0.2},
-                        {x: 0.24, y: 0.35},
-                        {x: 0.23, y: 0.5},
-                        {x: 0.22, y: 0.65},
-                        {x: 0.21, y: 0.8}
-                    ]
-                },
-                {
-                    name: "महाकाली नदी",
-                    points: [
-                        {x: 0.15, y: 0.2},
-                        {x: 0.14, y: 0.35},
-                        {x: 0.13, y: 0.5},
-                        {x: 0.12, y: 0.65},
-                        {x: 0.11, y: 0.8}
-                    ]
-                },
-                {
-                    name: "बागमती नदी",
-                    points: [
-                        {x: 0.65, y: 0.3},
-                        {x: 0.64, y: 0.4},
-                        {x: 0.63, y: 0.5},
-                        {x: 0.62, y: 0.6},
-                        {x: 0.61, y: 0.7}
-                    ]
-                },
-                {
-                    name: "कमला नदी",
-                    points: [
-                        {x: 0.75, y: 0.3},
-                        {x: 0.74, y: 0.4},
-                        {x: 0.73, y: 0.5},
-                        {x: 0.72, y: 0.6},
-                        {x: 0.71, y: 0.7}
-                    ]
-                },
-                {
-                    name: "तमोर नदी",
-                    points: [
-                        {x: 0.9, y: 0.2},
-                        {x: 0.88, y: 0.3},
-                        {x: 0.86, y: 0.4}
-                    ]
-                },
-                {
-                    name: "अरुण नदी",
-                    points: [
-                        {x: 0.8, y: 0.2},
-                        {x: 0.79, y: 0.3},
-                        {x: 0.78, y: 0.4}
-                    ]
-                },
-                {
-                    name: "सुन कोशी",
-                    points: [
-                        {x: 0.7, y: 0.2},
-                        {x: 0.69, y: 0.3},
-                        {x: 0.68, y: 0.4}
-                    ]
-                }
-            ];
+  { name: "चमेलिया", points: [ {}, {}, {}, {} ] },
+  { name: "महाकाली", points: [ {}, {}, {}, {} ] },
+  { name: "कर्णाली", points: [ {}, {}, {}, {} ] },
+  { name: "मुगु कर्णाली", points: [ {}, {}, {}, {} ] },
+  { name: "ठूलो भेरी", points: [ {}, {}, {}, {} ] },
+  { name: "सानो भेरी", points: [ {}, {}, {}, {} ] },
+  { name: "भेरी", points: [ {}, {}, {}, {} ] },
+  { name: "बबई", points: [ {}, {}, {}, {} ] },
+  { name: "राप्ती", points: [ {}, {}, {}, {} ] },
+  { name: "राप्ती (पूर्व)", points: [ {}, {}, {}, {} ] },
+  { name: "बुढी गण्डकी", points: [ {}, {}, {}, {} ] },
+  { name: "काली गण्डकी", points: [ {}, {}, {}, {} ] },
+  { name: "म्याग्दी", points: [ {}, {}, {}, {} ] },
+  { name: "अन्धी", points: [ {}, {}, {}, {} ] },
+  { name: "मार्स्याङ्दी", points: [ {}, {}, {}, {} ] },
+  { name: "नारायणी", points: [ {}, {}, {}, {} ] },
+  { name: "त्रिशुली", points: [ {}, {}, {}, {} ] },
+  { name: "बागमती", points: [ {}, {}, {}, {} ] },
+  { name: "इन्द्रावती", points: [ {}, {}, {}, {} ] },
+  { name: "सुनकोशी", points: [ {}, {}, {}, {} ] },
+  { name: "तामाकोशी", points: [ {}, {}, {}, {} ] },
+  { name: "लिखु", points: [ {}, {}, {}, {} ] },
+  { name: "दुधकोशी", points: [ {}, {}, {}, {} ] },
+  { name: "अरुण", points: [ {}, {}, {}, {} ] },
+  { name: "तमोर", points: [ {}, {}, {}, {} ] },
+  { name: "सप्तकोशी", points: [ {}, {}, {}, {} ] },
+  { name: "कमला", points: [ {}, {}, {}, {} ] },
+  { name: "मेची", points: [ {}, {}, {}, {} ] }
+];
 
             let currentQuestionIndex = Math.floor(Math.random() * rivers.length);
             const mapImage = document.getElementById('map-image');
