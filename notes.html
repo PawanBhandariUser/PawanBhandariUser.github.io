@@ -1,1 +1,200 @@
-<p>Coming soon</p>
+<!DOCTYPE html>
+<html lang="en" oncontextmenu="return false">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Notes - Samaik Mapwork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #0ea5e9, #1d4ed8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .stuck {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .note-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+            border: 1px solid #ddd;
+        }
+        .note-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        a.download-link {
+            color: #3b82f6;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        a.download-link:hover {
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-white font-['Poppins']">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-gray-100 to-blue-100 p-4 shadow-md stuck">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold gradient-text">Samaik Mapwork</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium">Practice</a>
+                <a href="notes.html" class="text-blue-700 font-medium">Notes</a>
+                <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>  
+                
+            </div>
+            <button id="menuBtn" class="md:hidden text-gray-700" title="Open mobile menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay hidden md:hidden"></div>
+    <div id="mobileMenu" class="mobile-menu p-6 hidden md:hidden">
+        <div class="flex justify-between items-center mb-8">
+            <div class="text-xl font-bold gradient-text">Menu</div>
+            <button id="closeMenu" class="text-gray-700" title="Close mobile menu">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-4">
+            <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Home</a>
+            <a href="practice.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">Practice</a>
+            <a href="notes.html" class="text-blue-700 font-medium py-2">Notes</a>
+            <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium py-2">About Us</a>
+            
+        </div>
+    </div>
+
+    <!-- Banner -->
+    <section class="py-16 px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Previous SEE Question Papers</h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">Access and download past SEE question papers here</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Example note cards -->
+            <div class="note-card">
+                <h3 class="text-xl font-semibold mb-2">SEE Question Paper 2077</h3>
+                <p class="mb-4">Social Studies</p>
+                <a href="papers/see_2077_social_studies.pdf" class="download-link" download>Download PDF</a>
+            </div>
+            <div class="note-card">
+                <h3 class="text-xl font-semibold mb-2">SEE Question Paper 2076</h3>
+                <p class="mb-4">Mathematics</p>
+                <a href="papers/see_2076_mathematics.pdf" class="download-link" download>Download PDF</a>
+            </div>
+            <div class="note-card">
+                <h3 class="text-xl font-semibold mb-2">SEE Question Paper 2075</h3>
+                <p class="mb-4">Science</p>
+                <a href="papers/see_2075_science.pdf" class="download-link" download>Download PDF</a>
+            </div>
+            <div class="note-card">
+                <h3 class="text-xl font-semibold mb-2">SEE Question Paper 2074</h3>
+                <p class="mb-4">English</p>
+                <a href="papers/see_2074_english.pdf" class="download-link" download>Download PDF</a>
+            </div>
+            <div class="note-card">
+                <h3 class="text-xl font-semibold mb-2">SEE Question Paper 2073</h3>
+                <p class="mb-4">Mathematics</p>
+                <a href="papers/see_2073_mathematics.pdf" class="download-link" download>Download PDF</a>
+            </div>
+            <div class="note-card">
+                <h3 class="text-xl font-semibold mb-2">SEE Question Paper 2072</h3>
+                <p class="mb-4">Social Studies</p>
+                <a href="papers/see_2072_social_studies.pdf" class="download-link" download>Download PDF</a>
+            </div>
+            <div class="note-card">
+                <h3 class="text-xl font-semibold mb-2">SEE Question Paper 2071</h3>
+                <p class="mb-4">Science</p>
+                <a href="papers/see_2071_science.pdf" class="download-link" download>Download PDF</a>
+            </div>
+            <div class="note-card">
+                <h3 class="text-xl font-semibold mb-2">SEE Question Paper 2070</h3>
+                <p class="mb-4">English</p>
+                <a href="papers/see_2070_english.pdf" class="download-link" download>Download PDF</a>
+            </div>
+        </div>
+
+        <!-- Downloadable PDFs -->
+        <section class="mt-12 max-w-md mx-auto space-y-4">
+            <div class="note-card">
+                <h3 class="text-lg font-semibold">SEE Question Paper 2069 - Mathematics</h3>
+                <a href="papers/see_2069_mathematics.pdf" class="download-link" download>Download PDF</a>
+            </div>
+            <div class="note-card">
+                <h3 class="text-lg font-semibold">SEE Question Paper 2068 - Social Studies</h3>
+                <a href="papers/see_2068_social_studies.pdf" class="download-link" download>Download PDF</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-600 mb-4 md:mb-0">
+                    © 2023 Samaik Mapwork. All rights reserved.
+                </div>
+                <div class="flex space-x-4">
+                    <a href="term.html" class="text-gray-600 hover:text-blue-600">Terms of Service</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-blue-600">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('menuBtn');
+            const closeMenu = document.getElementById('closeMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+            function toggleMenu() {
+                if (mobileMenu.classList.contains('show')) {
+                    mobileMenu.classList.remove('show');
+                    mobileMenuOverlay.classList.remove('show');
+                    document.body.style.overflow = '';
+                } else {
+                    mobileMenu.classList.add('show');
+                    mobileMenuOverlay.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            menuBtn.addEventListener('click', toggleMenu);
+            closeMenu.addEventListener('click', toggleMenu);
+            mobileMenuOverlay.addEventListener('click', toggleMenu);
+
+            // Close menu when clicking menu items
+            const menuItems = mobileMenu.querySelectorAll('a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', toggleMenu);
+            });
+
+            // Close menu on window resize if open
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768 && mobileMenu.classList.contains('show')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
