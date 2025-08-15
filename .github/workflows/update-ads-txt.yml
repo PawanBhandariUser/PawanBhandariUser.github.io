@@ -1,1 +1,25 @@
+name: Update ads.txt
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
+  workflow_dispatch:    # Allows manual run
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Download latest ads.txt from Ezoic
+        run: curl -L "https://srv.adstxtmanager.com/19390/pawan0.com.np.com" -o ads.txt
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add ads.txt
+          git commit -m "Update ads.txt from Ezoic" || echo "No changes to commit"
+          git push
 
