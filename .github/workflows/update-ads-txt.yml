@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download latest ads.txt from Ezoic
-        run: curl -L "https://srv.adstxtmanager.com/19390/pawan0.com.np.com" -o ads.txt
+        run: curl -L "https://srv.adstxtmanager.com/19390/pawan0.com.np" -o ads.txt
 
       - name: Commit and push changes
         run: |
