@@ -19,20 +19,16 @@
 
     nav {
       position: sticky;
-      top: 10px;
-      width: 90%;
-      margin: auto;
+      width: 100%;
       height: 70px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 40px;
-      border-radius: 60px;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 87, 34, 0.9));
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       z-index: 1000;
-      animation: fadeInDown 1s ease;
     }
 
     .brand-name {
@@ -41,9 +37,11 @@
       color: #fff;
       letter-spacing: 2px;
       text-decoration: none;
+      padding-left: 55px;
     }
 
     .links-box {
+      padding-right: 50px;
       display: flex;
       gap: 40px;
     }
@@ -101,12 +99,11 @@
       font-size: 2rem;
       margin-bottom: 20px;
       font-weight: 800;
-      background: linear-gradient(270deg, #ffc107, #ff9800, #ff5722, #ffc107);
+      background: linear-gradient(135deg, #4facfe, #00f2fe, #ff9a9e);
       background-size: 400% 400%;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: gradientMove 6s ease infinite;
     }
 
     label {
@@ -192,8 +189,8 @@
   <nav>
     <a href="try.html" class="brand-name">Cloud Kitchen</a>
     <div class="links-box">
+      <a href = "try.html" class="links">Home</a>
       <p class="links">Order</p>
-      <p class="links">Cart</p>
       <a href="try2.html" class="links">Register</a>
       <p class="links">About us</p>
     </div>

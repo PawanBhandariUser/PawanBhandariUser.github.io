@@ -13,51 +13,53 @@
 
     body {
       font-family: 'Playfair Display', serif;
-      background: #f7f3ef;
-      color: #333;
+      background: linear-gradient(135deg, #1e1e2f, #2d2d44, #1a1a28);
+      color: #fff;
+      min-height: 100vh;
     }
 
     nav {
       position: sticky;
-      width: 100%;
+      top: 0;
+      width: 90%;
+      margin: 20px auto;
       height: 70px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 87, 34, 0.9));
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      -webkit-backdrop-filter: blur(15px);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      padding: 0 40px;
       z-index: 1000;
     }
 
     .brand-name {
-      padding-left: 55px;
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      color: #fff;
+      color: #ffffff;
       letter-spacing: 2px;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
       cursor: pointer;
       transition: transform 0.3s;
       text-decoration: none;
     }
 
     .brand-name:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
 
     .links-box {
-      padding-right: 50px;
       display: flex;
-      gap: 40px;
+      gap: 35px;
     }
 
     .links {
       text-decoration: none;
       position: relative;
-      font-size: 1.1rem;
-      color: white;
+      font-size: 1rem;
+      color: #e0e0e0;
       font-weight: 500;
       cursor: pointer;
       transition: color 0.3s ease, transform 0.2s;
@@ -70,28 +72,17 @@
       height: 2px;
       left: 0;
       bottom: -5px;
-      background: white;
+      background: #ffffff;
       transition: width 0.3s ease;
     }
 
     .links:hover {
-      color: #ffe082;
+      color: #ffffff;
       transform: translateY(-2px);
     }
 
     .links:hover::after {
       width: 100%;
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .front-data-excite {
@@ -101,35 +92,35 @@
       margin: 40px auto;
       background: url('front.jpg') center/cover no-repeat;
       border-radius: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
     }
 
     .glass-box {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 25px;
       padding: 40px;
-      -webkit-backdrop-filter: blur(4px);
-      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
       text-align: center;
-      color: white;
+      color: #fff;
       max-width: 700px;
     }
 
     .glass-box h1 {
       font-size: 3rem;
       margin-bottom: 15px;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
     }
 
     .glass-box p {
       font-size: 1.2rem;
-      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
       margin-bottom: 30px;
+      color: #e0e0e0;
     }
+
     .order-btn {
       position: relative;
       display: inline-block;
@@ -137,60 +128,20 @@
       font-size: 1.2rem;
       font-weight: bold;
       color: white;
-      background: transparent;
       border: 2px solid transparent;
       border-radius: 50px;
       cursor: pointer;
       overflow: hidden;
       transition: all 0.4s ease;
       z-index: 1;
-    }
-
-    .order-btn::before {
-      content: "";
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(270deg, #ff9800, #ff5722, #ffc107, #ff9800);
-      background-size: 300% 300%;
-      border-radius: 50px;
-      z-index: -1;
-      animation: borderFlow 4s linear infinite;
-    }
-
-    .order-btn::after {
-      content: "";
-      position: absolute;
-      inset: 2px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 50px;
-      z-index: -1;
-      transition: all 0.45s ease;
+      background: rgba(255, 255, 255, 0.15);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
     }
 
     .order-btn:hover {
-      color: #333;
-    }
-
-    .order-btn:hover::after {
-      background: white;
-    }
-
-
-
-    @keyframes borderFlow {
-      0% {
-         background-position: 0% 50%; 
-      }
-
-      50% { 
-        background-position: 100% 50%;
-       }
-      100% { 
-        background-position: 0% 50%; 
-      }
+      color: #1e1e2f;
+      background: #fff;
     }
 
     @media (max-width: 768px) {
@@ -198,7 +149,7 @@
         flex-direction: column;
         height: auto;
         padding: 15px 20px;
-        border-radius: 0;
+        border-radius: 12px;
       }
 
       .links-box {
@@ -220,18 +171,15 @@
         font-size: 1rem;
       }
     }
-
-
-
   </style>
 </head>
 <body>
   <nav>
     <a href="try.html" class="brand-name">Cloud Kitchen</a>
     <div class="links-box">
-      <a href = "try.html" class="links">Home</a>
+      <a href="try.html" class="links">Home</a>
       <p class="links">Order</p>
-      <a href = "try2.html" class="links">Register</a>
+      <a href="try2.html" class="links">Register</a>
       <p class="links">About us</p>
     </div>
   </nav>
