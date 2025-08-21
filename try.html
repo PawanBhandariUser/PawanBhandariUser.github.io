@@ -230,7 +230,7 @@
     <a href="try.html" class="brand-name">Cloud Kitchen</a>
     <div class="links-box">
       <a href = "try.html" class="links">Home</a>
-      <p class="links">Order</p>
+      <a href="try3.html" class="links">Order</a>
       <a href = "try2.html" class="links">Register</a>
       <p class="links">About us</p>
     </div>
@@ -240,8 +240,13 @@
     <div class="glass-box">
       <h1>Welcome to Cloud Kitchen</h1>
       <p>Discover authentic Nepali flavors delivered from traditional kitchens straight to your home.</p>
-      <button class="order-btn">Order Now</button>
+      <button class="order-btn" onclick=redirect()>Order Now</button>
     </div>
   </section>
+  <script>
+    function redirect(){
+      location.href = "try3.html";
+    }
+  </script>
 </body>
 </html>
