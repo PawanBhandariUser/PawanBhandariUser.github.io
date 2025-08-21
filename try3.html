@@ -87,19 +87,15 @@
       margin: 40px auto 20px;
       max-width: 1200px;
       text-align: center;
-
     }
 
-
-    .filter-box h1{
-        background: linear-gradient(270deg, rgba(255, 193, 7, 0.9), rgba(255, 87, 34, 0.9));
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 40px;
-        padding: 30px;
-
+    .filter-box h1 {
+      background: linear-gradient(270deg, rgba(255, 193, 7, 0.9), rgba(255, 87, 34, 0.9));
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 40px;
+      padding: 30px;
     }
-
 
     select {
       padding: 12px 18px;
@@ -123,6 +119,7 @@
       max-width: 1200px;
       margin: 20px auto 60px;
       padding: 0 20px;
+
     }
 
     .card {
@@ -152,14 +149,21 @@
     .card p {
       font-size: 0.95rem;
       color: #555;
-      margin: 0 15px 20px;
+      margin: 0 15px 10px;
+    }
+
+    .price {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #ff5722;
+      margin-bottom: 12px;
     }
 
     .order-btn {
       position: relative;
       display: inline-block;
-      padding: 14px 40px;
-      font-size: 1.2rem;
+      padding: 10px 30px;
+      font-size: 1rem;
       font-weight: bold;
       color: white;
       background: transparent;
@@ -210,6 +214,62 @@
       100% { background-position: 0% 50%; }
     }
 
+    .cart {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart h2 {
+      margin-bottom: 15px;
+      color: #ff5722;
+    }
+
+    .cart table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .cart th, .cart td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart th {
+      background: #f7f3ef;
+      color: #333;
+    }
+
+    .cart-total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-top: 15px;
+      color: #ff5722;
+    }
+
+    .confirm-btn {
+      display: block;
+      margin: 20px auto 0;
+      padding: 12px 40px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #ff9800, #ff5722);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .confirm-btn:hover {
+      transform: scale(1.05);
+    }
+
     footer {
       background: #333;
       color: #fff;
@@ -217,30 +277,12 @@
       padding: 18px;
       margin-top: 30px;
     }
-
-    @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
-        height: auto;
-        padding: 15px 20px;
-      }
-      .links-box {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 10px;
-      }
-    }
-
-    .single-card {
-      display: flex !important;
+    .single-card{
+      grid-template-columns: repeat(auto-fit, minmax(250px, 300px)) !important;
       justify-content: center;
-    }
+}
 
-    .single-card .card {
-      max-width: 350px;
-      width: 100%;
-    }
+    
   </style>
 </head>
 <body>
@@ -256,7 +298,7 @@
 
   <section class="filter-box">
     <h1>Choose what you want to eat.</h1>
-    <select title = "food selector"id="food-filter">
+    <select title="food selector" id="food-filter">
       <option value="all">All Foods</option>
       <option value="kheer">Kheer</option>
       <option value="dhido">Dhido</option>
@@ -270,61 +312,86 @@
   </section>
 
   <section class="cards-container">
-    <div class="card" data-food="kheer">
+    <div class="card" data-food="kheer" data-price="150">
       <img src="images/kheer.png" alt="Kheer">
       <h3>Kheer</h3>
       <p>Sweet Nepali rice pudding flavored with cardamom and nuts.</p>
+      <p class="price">Rs. 150</p>
       <button class="order-btn">Order</button>
     </div>
 
-    <div class="card" data-food="dhido">
+    <div class="card" data-food="dhido" data-price="250">
       <img src="images/dhedo.png" alt="Dhido">
       <h3>Dhido</h3>
       <p>Traditional Nepali staple made with buckwheat or millet flour.</p>
+      <p class="price">Rs. 250</p>
       <button class="order-btn">Order</button>
     </div>
 
-    <div class="card" data-food="phapar">
+    <div class="card" data-food="phapar" data-price="120">
       <img src="images/phapar.png" alt="Phapar ko Roti">
       <h3>Phapar ko Roti</h3>
       <p>Buckwheat flatbread, the local and original type.</p>
+      <p class="price">Rs. 120</p>
       <button class="order-btn">Order</button>
     </div>
 
-    <div class="card" data-food="choila">
+    <div class="card" data-food="choila" data-price="300">
       <img src="images/chic.png" alt="Chicken Choila">
       <h3>Chicken Choila</h3>
       <p>Spicy grilled chicken, a favorite among Nepali appetizers.</p>
+      <p class="price">Rs. 300</p>
       <button class="order-btn">Order</button>
     </div>
 
-    <div class="card" data-food="roti">
+    <div class="card" data-food="roti" data-price="100">
       <img src="images/fine.png" alt="Fine Roti">
       <h3>Fine Roti</h3>
       <p>Soft wheat-based flatbread enjoyed with curries and vegetables.</p>
+      <p class="price">Rs. 100</p>
       <button class="order-btn">Order</button>
     </div>
 
-    <div class="card" data-food="lassi">
+    <div class="card" data-food="lassi" data-price="80">
       <img src="images/lassi.png" alt="Lassi">
       <h3>Lassi</h3>
       <p>Refreshing yogurt-based drink with bananas, sweetened or salted.</p>
+      <p class="price">Rs. 80</p>
       <button class="order-btn">Order</button>
     </div>
 
-    <div class="card" data-food="gundruk">
+    <div class="card" data-food="gundruk" data-price="200">
       <img src="images/gundruk.png" alt="Gundruk">
       <h3>Gundruk</h3>
       <p>Fermented leafy green vegetable, a signature original.</p>
+      <p class="price">Rs. 200</p>
       <button class="order-btn">Order</button>
     </div>
 
-    <div class="card" data-food="mula">
+    <div class="card" data-food="mula" data-price="90">
       <img src="images/mula.png" alt="Mula ko Acchar">
       <h3>Mula ko Acchar</h3>
       <p>Spicy radish pickle for making a whole meal taster.</p>
+      <p class="price">Rs. 90</p>
       <button class="order-btn">Order</button>
     </div>
+  </section>
+
+  <section class="cart">
+    <h2>Your Cart</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Food</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody id="cart-body"></tbody>
+    </table>
+    <div class="cart-total" id="cart-total">Total: Rs. 0</div>
+    <button class="confirm-btn" onclick=Clear()>Confirm Order</button>
   </section>
 
   <footer>
@@ -335,6 +402,9 @@
     const filter = document.getElementById("food-filter");
     const cards = document.querySelectorAll(".card");
     const container = document.querySelector(".cards-container");
+    const cartBody = document.getElementById("cart-body");
+    const cartTotal = document.getElementById("cart-total");
+    var cart = {};
 
     filter.addEventListener("change", () => {
       const value = filter.value;
@@ -355,6 +425,54 @@
         container.classList.remove("single-card");
       }
     });
+
+    document.querySelectorAll(".order-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const card = button.closest(".card");
+        const food = card.querySelector("h3").innerText;
+        const price = parseInt(card.dataset.price);
+
+        if (!cart[food]) {
+          cart[food] = { price, quantity: 1 };
+        } else {
+          cart[food].quantity++;
+        }
+
+        update_cart();
+      });
+    });
+
+    function update_cart() {
+      cartBody.innerHTML = "";
+      let total = 0;
+
+
+      Object.keys(cart).forEach(food => {
+        const item = cart[food];
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+
+        cartBody.innerHTML += `
+          <tr>
+            <td>${food}</td>
+            <td>Rs. ${item.price}</td>
+            <td>${item.quantity}</td>
+            <td>Rs. ${subtotal}</td>
+          </tr>
+        `;
+      });
+
+
+      cartTotal.innerText = `Total: Rs. ${total}`;
+
+    }
+    function Clear(){
+      cart = {}
+      update_cart();
+    }
+
+
+
   </script>
 </body>
 </html>
